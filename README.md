@@ -2,7 +2,7 @@
 
 This repository contains simple, small, and useful Python functions that can be easily integrated into various projects. It serves as a collection of code snippets to help automate common tasks and enhance your Python development experience. All functions are designed to be easy to understand and implement.
 
-## Function: `web_search_automation(target_website_url, topic)`
+## Function: `web_search_automation.search_and_click(target_website_url, topic)`
 
 ### Description:
 The `web_search_automation` function automates the process of searching for a specified topic on Google and navigating through search result pages until it finds the target website URL. It opens Google in **Incognito mode** using Selenium and clicks on the first link that matches the given target website URL.
@@ -20,60 +20,13 @@ The `web_search_automation` function automates the process of searching for a sp
 
 ### Example Usage:
 ```python
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-import time
+import web_search_automation
 
-def web_search_automation(target_website_url, topic):
-    # Set up Chrome options for Incognito mode
-    chrome_options = Options()
-    chrome_options.add_argument("--incognito")
-    
-    # Specify path to chromedriver manually
-    chromedriver_path = "path_to_your_chromedriver"  # Replace with the actual path to chromedriver
-    service = Service(chromedriver_path)
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    
-    # Open Google and search for the given topic
-    driver.get("https://www.google.com")
-    search_box = driver.find_element(By.NAME, "q")  # Find the search box
-    search_box.send_keys(topic)  # Type the topic
-    search_box.submit()  # Press Enter
-    
-    # Limit the number of pages to search through
-    max_pages = 5
-    page_number = 1
-    
-    while page_number <= max_pages:
-        try:
-            # Find all search result links on the current page
-            search_results = driver.find_elements(By.XPATH, "//h3/parent::a")
-            
-            for result in search_results:
-                result_url = result.get_attribute("href")  # Get the URL of the search result
-                if target_website_url in result_url:  # Match the URL
-                    result.click()  # Click the target website
-                    print(f"Found and clicked on {target_website_url}")
-                    break
-            else:
-                # If not found on this page, go to the next page
-                next_button = driver.find_element(By.XPATH, "//span[@class='oeN89d' and text()='Next']")
-                next_button.click()  # Click the 'Next' button to go to the next page
-                page_number += 1
-                time.sleep(2)  # Wait for the next page to load
-                print(f"Moving to page {page_number}")
-                continue
-        except Exception as e:
-            print(f"Error: {e}")
-            break
-    
-    # Wait for a few seconds to see the result (for demonstration)
-    driver.implicitly_wait(5)
-    
-    # Close the browser
-    driver.quit()
+keys = ['viratak telecommunication', 'viratak telecommunications', 'viratak communications', 'viratak communication']
+url = 'viratak-en.com'
+
+for item in keys:
+    web_search_automation.search_and_click(url, item)
 ```
 
 ### Requirements:
