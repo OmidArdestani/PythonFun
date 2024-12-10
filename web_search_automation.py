@@ -60,9 +60,3 @@ def search_and_click(target_website_url, topic):
     # Close the browser
     driver.quit()
     
-    
-keys = ['viratak telecommunication', 'viratak telecommunications', 'viratak communications', 'viratak communication']
-url = 'viratak-en.com'
-
-for item in keys:
-    web_search_automation(url, item)
